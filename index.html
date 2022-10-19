@@ -255,121 +255,52 @@ public function deleteProfile($id){
 <textarea name="" id="" cols="200" rows="15" class="form-control">                                                         
 <!doctype html>
 <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Arman</title>
-  
-      <!-- bootstrap -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    </head>
-    <body>
-  
-      <section class="py-5">
-          <div class="container-fluid">
-              <div class="row justify-content-center py-3">
-                <div class="col-11" style="box-shadow: 0px 0px 5px gray;border-radius: .5rem;">
-                  <div class="row justify-content-center pt-3">
-                    <div class="col-12">
-                      <h3>Create Form</h3><hr>
-                    </div>
-                  </div> 
-                  <form action="{{ url('/store') }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                      <div class="row">
-  
-                          <div class="col-xl-4 col-md-4 mb-3">
-                            <label for="" class="p-1 fs-5">Image</label>
-                            <input type="file" name="image" value="1" class="form-control" required>
-                          </div>
-                          <div class="col-xl-4 col-md-4 mb-3">
-                            <label for="" class="p-1 fs-5">Name</label>
-                            <input type="text" name="name" class="form-control" required>
-                          </div>
-                          <div class="col-xl-4 col-md-4 mb-3">
-                            <label for="" class="p-1 fs-5">Mobile</label>
-                            <input type="text" name="mobile" class="form-control" required>
-                          </div>
-                          <div class="col-xl-4 col-md-4 mb-3">
-                            <label for="" class="p-1 fs-5">Email</label>
-                            <input type="email" name="email" class="form-control" required>
-                          </div>
-                          <div class="col-xl-4 col-md-4 mb-3">
-                            <label for="" class="p-1 fs-5">Password</label>
-                            <input type="password" name="password" class="form-control" required>
-                          </div>
-                          <div class="col-xl-4 col-md-4 mb-3">
-                            <label for="" class="p-1 fs-5">Profession</label>
-                            <select name="profession" class="form-select" required>
-                              <option value="Choose" selected hidden>Choose</option>
-                              <option value="Student">Student</option>
-                              <option value="Businessman">Businessman</option>
-                            </select>
-                          </div>
-                          <div class="col-xl-4 col-md-4 mb-3">
-                            <label for="" class="p-1 fs-5">Gender</label>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="gender" id="Male">
-                              <label class="form-check-label" for="Male">Male</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="gender" id="Female">
-                              <label class="form-check-label" for="Female">Female</label>
-                            </div>
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="gender" id="Others">
-                              <label class="form-check-label" for="Others">Others</label>
-                            </div>
-                          </div>
-                          <div class="col-xl-4 col-md-4 mb-3">
-                            <label for="" class="p-1 fs-5">Hobby</label>
-                            <div class="row">
-                              <div class="col-6">
-                                  <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="Cricket">
-                                      <label class="form-check-label" for="Cricket">
-                                        Cricket
-                                      </label>
-                                    </div>
-                                    <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="Football">
-                                      <label class="form-check-label" for="Football">
-                                        Football
-                                      </label>
-                                    </div>
-                              </div>
-                              <div class="col-6">
-                                  <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="Cricket">
-                                      <label class="form-check-label" for="Cricket">
-                                        Badminton
-                                      </label>
-                                    </div>
-                                    <div class="form-check">
-                                      <input class="form-check-input" type="checkbox" value="" id="Football">
-                                      <label class="form-check-label" for="Football">
-                                        Volleyball
-                                      </label>
-                                    </div>
-                              </div>
-                            </div>
-                          </div>
-  
-                          
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arman</title>
 
-                          <div class="col-12 mb-3 d-flex justify-content-center">
-                            <input type="submit" value="Done" class="btn btn-success fw-bold px-5" name="submit">
-                          </div>
-                      </div>
-                  </form>
-                </div>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+              <div class="col-12 text-end">
+                <a href="/blog" class="btn btn-success fw-bold">All Blog</a>
               </div>
-          </div>
-      </section>
-      
-      <!-- bootstrap -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    </body>
+            </div>
+            <form action="{{ url('/store') }}" method="post" enctype="multipart/form-data" class="p-2">
+                @csrf
+                <div style="box-shadow: 0px 0px 5px gray; padding:2rem; border-radius:.5rem;">
+                  <h2>Create</h2><hr>
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Image</label>
+                        <input type="file" name="image" class="form-control">
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" class="form-control">
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" class="form-control" id="" cols="30" rows="5"></textarea>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <button type="submit" class="btn btn-success fw-bold">POST</button>
+                    </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </section>
+  
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
 </html>
 </textarea>                                    
                                                         </pre>
@@ -382,7 +313,65 @@ public function deleteProfile($id){
                                                 <div class="row">
                                                     <h6>
                                                         <pre>
-index                                                                                                         
+<textarea name="" id="" cols="200" rows="15" class="form-control"> 
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arman</title>
+
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+              <div class="col-12 text-end pb-2">
+                <a href="/blog" class="btn btn-success fw-bold">All Blog</a>
+              </div>
+            </div>
+            <div style="box-shadow: 0px 0px 5px gray; padding:2rem; border-radius:.5rem;">
+                <div class="table-responsive">
+                    <h2>List</h2><hr>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Description</th>
+                                <th scope="col" style="text-align:center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($all_data as $all_data)
+                            <tr>
+                                <th scope="row">{{$loop->index+1}}</th>
+                                <td>{{$all_data->title}}</td>
+                                <td><img src="{{ asset('images/blog/'.$all_data->image) }}" style="width:100px;height:100px;"></td>
+                                <td>{{$all_data->description}}</td>
+                                <td style="text-align:center;">
+                                    <a href="{{ url('/show',$all_data->id) }}" class="btn btn-success fw-bold mb-1">Show</a>
+                                    <a href="{{ url('/edit',$all_data->id) }}" class="btn btn-primary fw-bold mb-1">Edit</a>
+                                    <a href="{{ url('/delete',$all_data->id) }}" class="btn btn-danger fw-bold mb-1">Delete</a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>        
+</textarea> 
                                                         </pre>
                                                     </h6>
                                                 </div>
@@ -393,7 +382,36 @@ index
                                                 <div class="row">
                                                     <h6>
                                                         <pre>
-show                                                
+<textarea name="" id="" cols="200" rows="15" class="form-control">                                                      
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arman</title>
+
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h1>{{$data->title}}</h1>
+                    <img src="{{ asset('images/blog/'.$data->image) }}" style="width:100%;" class="img-fluid">
+                    <p>{{$data->description}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>   
+</textarea>
                                                         </pre>
                                                     </h6>
                                                 </div>
@@ -404,7 +422,58 @@ show
                                                 <div class="row">
                                                     <h6>
                                                         <pre>
-edit                                                                                                       
+<textarea name="" id="" cols="200" rows="15" class="form-control">                                                       
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arman</title>
+
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  </head>
+  <body>
+    
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+              <div class="col-12 text-end">
+                <a href="/blog" class="btn btn-success fw-bold">All Blog</a>
+              </div>
+            </div>
+            <form action="{{ url('/update',$data->id) }}" method="post" enctype="multipart/form-data" class="p-2">
+                @csrf
+                <div style="box-shadow: 0px 0px 5px gray; padding:2rem; border-radius:.5rem;">
+                  <h2>Edit</h2><hr>
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Image</label>
+                        <input type="file" name="image" class="form-control">
+                        <img src="{{ asset('images/blog/'.$data->image) }}" style="width:150px;height:150px;" class="my-3">
+                    </div>
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" value="{{$data->title}}" class="form-control">
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" class="form-control" id="" cols="30" rows="5">{{$data->description}}</textarea>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <button type="submit" class="btn btn-success fw-bold">UPDATE</button>
+                    </div>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </section>
+  
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>                                                          
+</textarea>
                                                         </pre>
                                                     </h6>
                                                 </div>
