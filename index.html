@@ -22,6 +22,7 @@
                         <li class="nav-item p-1" role="presentation"><button class="nav-link" id="pills-four-tab" data-bs-toggle="pill" data-bs-target="#pills-four" type="button" role="tab" aria-controls="pills-four" aria-selected="false">Controller.php</button></li>
                         <li class="nav-item p-1" role="presentation"><button class="nav-link" id="pills-five-tab" data-bs-toggle="pill" data-bs-target="#pills-five" type="button" role="tab" aria-controls="pills-five" aria-selected="false">.blade.php</button></li>
                         <li class="nav-item p-1" role="presentation"><button class="nav-link" id="pills-six-tab" data-bs-toggle="pill" data-bs-target="#pills-six" type="button" role="tab" aria-controls="pills-six" aria-selected="false">Cache Clear</button></li>
+                        <li class="nav-item p-1" role="presentation"><button class="nav-link" id="pills-seven-tab" data-bs-toggle="pill" data-bs-target="#pills-seven" type="button" role="tab" aria-controls="pills-seven" aria-selected="false">Multi Auth</button></li>
 
                       </ul>
                       <div class="tab-content" id="pills-tabContent">
@@ -536,6 +537,99 @@ php artisan route:cache
 php artisan view:clear
 php artisan config:cache 
 
+                                    </pre>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-seven" role="tabpanel" aria-labelledby="pills-seven-tab" tabindex="0">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <h3>
+                                    <pre>
+<textarea name="" id="" cols="200" rows="15" class="form-control"> 
+database/migrations/000_create_users_table.php
+$table->boolean('is_admin')->nullable();
+
+app/Models/User.php
+'is_admin'
+
+ডাটাবেস মিলিয়ে নিতে হবে
+
+php artisan migrate
+composer require laravel/ui
+php artisan ui bootstrap --auth
+npm install
+npm run dev
+php artisan make:middleware IsAdmin
+
+app/Http/middleware/IsAdmin.php
+        if(auth()->user()->is_admin == 1){
+            return $next($request);
+        }
+        return redirect('home')->with('error',"You don't have admin access.");
+
+app/Http/Kernel.php
+protected $routeMiddleware = [
+    'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+    'is_admin' => \App\Http\Middleware\IsAdmin::class,
+];
+
+routes/web.php
+use App\Http\Controllers\HomeController;
+Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+
+app/Http/Controllers/HomeController.php
+public function adminHome()
+{
+    return view('adminHome');
+}
+
+
+resources/views/adminHome.blade.php
+@extends('layouts.app')
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Dashboard</div>
+                <div class="card-body">
+                    You are Admin.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+app/Http/Controllers/Auth/LoginController.php   
+use Illuminate\Http\Request;    
+
+public function login(Request $request)
+{   
+        $input = $request->all();
+   
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+   
+        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        {
+            if (auth()->user()->is_admin == 1) {
+                return redirect()->route('admin.home');
+            }else{
+                return redirect()->route('home');
+            }
+        }else{
+            return redirect()->route('login')
+                ->with('error','Email-Address And Password Are Wrong.');
+        }
+          
+}
+
+</textarea>
                                     </pre>
                                     </h3>
                                 </div>
