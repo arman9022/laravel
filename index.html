@@ -302,7 +302,7 @@ public function deleteProfile($id){
                     </div>
                     <div class="col-12 mb-3">
                         <label class="form-label">Description</label>
-                        <textareas name="description" class="form-control" id="" cols="30" rows="5"></textareas>
+                        <textareas name="description" class="form-control" id="editor" cols="30" rows="5"></textareas>
                     </div>
                     <div class="col-12 mb-3">
                       <button type="submit" class="btn btn-success fw-bold">POST</button>
@@ -315,6 +315,18 @@ public function deleteProfile($id){
   
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  
+    <!-- editor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ))
+              .catch( error => {
+                  console.error( error );
+              }
+            );
+    </script>
+  
   </body>
 </html>
 </textarea>                                    
@@ -367,7 +379,7 @@ public function deleteProfile($id){
                                 <th scope="row">{{$loop->index+1}}</th>
                                 <td>{{$all_data->title}}</td>
                                 <td><img src="{{ asset('images/blog/'.$all_data->image) }}" style="width:100px;height:100px;"></td>
-                                <td>{{$all_data->description}}</td>
+                                <td>{!!$all_data->description!!}</td>
                                 <td style="text-align:center;">
                                     <a href="{{ url('/show',$all_data->id) }}" class="btn btn-success fw-bold mb-1">Show</a>
                                     <a href="{{ url('/edit',$all_data->id) }}" class="btn btn-primary fw-bold mb-1">Edit</a>
@@ -416,7 +428,7 @@ public function deleteProfile($id){
                 <div class="col-md-6">
                     <h1>{{$data->title}}</h1>
                     <img src="{{ asset('images/blog/'.$data->image) }}" style="width:100%;" class="img-fluid">
-                    <p>{{$data->description}}</p>
+                    <p>{!!$data->description!!}</p>
                 </div>
             </div>
         </div>
@@ -474,7 +486,7 @@ public function deleteProfile($id){
                     </div>
                     <div class="col-12 mb-3">
                         <label class="form-label">Description</label>
-                        <textareas name="description" class="form-control" id="" cols="30" rows="5">{{$data->description}}</textareas>
+                        <textareas name="description" class="form-control" id="editor" cols="30" rows="5">{{$data->description}}</textareas>
                     </div>
                     <div class="col-12 mb-3">
                       <button type="submit" class="btn btn-success fw-bold">UPDATE</button>
@@ -487,7 +499,19 @@ public function deleteProfile($id){
   
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  </body>
+ 
+    <!-- editor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ))
+              .catch( error => {
+                  console.error( error );
+              }
+            );
+    </script>
+ 
+ </body>
 </html>                                                          
 </textarea>
                                                         </pre>
