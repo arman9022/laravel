@@ -53,7 +53,7 @@
                                     <h4>Route::get('/index<span class="text-danger">Profile</span>', [<span class="text-danger">Profile</span>Controller::class, 'index<span class="text-danger">Profile</span>']);</h4> 
                                     <h4 class="mt-4">Route::get('/show<span class="text-danger">Profile</span>/{id}', [<span class="text-danger">Profile</span>Controller::class, 'show<span class="text-danger">Profile</span>']);</h4>
                                     <h4>Route::get('/edit<span class="text-danger">Profile</span>/{id}', [<span class="text-danger">Profile</span>Controller::class,'edit<span class="text-danger">Profile</span>']);</h4>
-                                    <h4>Route::post('/update<span class="text-danger">Profile</span>/{id}', [<span class="text-danger">Profile</span>Controller::class, 'update<span class="text-danger">Profile</span>']);</h4>
+                                    <h4>Route::put('/update<span class="text-danger">Profile</span>/{id}', [<span class="text-danger">Profile</span>Controller::class, 'update<span class="text-danger">Profile</span>']);</h4>
                                     <h4>Route::get('/delete<span class="text-danger">Profile</span>/{id}', [<span class="text-danger">Profile</span>Controller::class, 'delete<span class="text-danger">Profile</span>']);</h4>
                                 </div>
                             </div>
@@ -110,20 +110,25 @@ public function createProfile(){
                                                 <div class="row">
                                                     <h6>
                                                         <pre>
+use Illuminate\Support\Facades\File;
+
+public function createProfile(){                                                
+        return view('profile.createProfile');
+}
+                                                        
 public function storeProfile(Request $request){
 
     $all_data=new Profile;
                                                         
     $all_data ->name= $request->name;
                                                         
-    $files=$request->file('image');
-    $name=$request->file('image')->getClientOriginalName();
     if($request->hasFile('image')) {
-    $name=$request->file('image')->getClientOriginalName();
-    $request->file('image')->storeAs('images/',$name);
-    $request->image->move(public_path('images'), $name);
+        $file=$request->file('image');
+        $name=$file->getClientOriginalName();
+        $request->file('image')->storeAs('images/blog/',$name);
+        $file->move(public_path('images/blog/'),$name);
+        $all_data->image = $name;
     }
-    $all_data->image="images/".$name;
                                                         
     $all_data->save();
                                                         
@@ -195,16 +200,19 @@ public function updateProfile(Request $request, $id){
                                                         
     $data->name= $request->name;
                                                                 
-    $file=$request->file('image');
-    $name=$request->file('image')->getClientOriginalName();
-    if($request->hasFile('image')) {
-        $name=$request->file('image')->getClientOriginalName();
-        $request->file('image')->storeAs('images/',$name);
-        $request->image->move(public_path('images'), $name);
+    if($request->hasfile('image')){
+        $destination = 'images/blog/'.$data->image;
+        if(File::exists($destination)){
+            File::delete($destination);
+        }
+        $file=$request->file('image');
+        $name=$file->getClientOriginalName();
+        $request->file('image')->storeAs('images/blog/',$name);
+        $file->move(public_path('images/blog/'),$name);
+        $data->image = $name;
     }
-    $data->image="images/".$name;
                                                                 
-    $data->save();
+    $data->update();
                                                         
     return redirect()->to('/showProfile')->with('message', 'Updated Successfully');  
 }                                                                                                         
@@ -221,7 +229,12 @@ public function updateProfile(Request $request, $id){
 public function deleteProfile($id){
 
     $data = Profile::find($id);
-                                                        
+                        
+    $destination = 'images/blog/'.$data->image;
+    if(File::exists($destination)){
+        File::delete($destination);
+    }          
+                        
     $data->delete();
                                                         
     return redirect()->back()->with('message', 'Deleted Successfully');
@@ -446,6 +459,7 @@ public function deleteProfile($id){
             </div>
             <form action="{{ url('/update',$data->id) }}" method="post" enctype="multipart/form-data" class="p-2">
                 @csrf
+                @method('PUT')
                 <div style="box-shadow: 0px 0px 5px gray; padding:2rem; border-radius:.5rem;">
                   <h2>Edit</h2><hr>
                   <div class="row">
