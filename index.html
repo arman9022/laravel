@@ -79,6 +79,8 @@ class <span class="text-danger">Profile</span> extends Model
                                 <div class="row">
                                     <span class="text-danger"></span>
                                     <h3></h3>
+                                  
+                                    <h3>use Illuminate\Support\Facades\File;</h3>
                                     <h3>use App\Models\<span class="text-danger">Profile</span>;</h3>
                                     <div class="d-flex align-items-start py-5">
                                         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -110,7 +112,6 @@ public function createProfile(){
                                                 <div class="row">
                                                     <h6>
                                                         <pre>
-use Illuminate\Support\Facades\File;
 
 public function createProfile(){                                                
         return view('profile.createProfile');
