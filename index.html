@@ -283,6 +283,11 @@ public function deleteProfile($id){
   </head>
   <body>
     
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
     <section class="py-5">
         <div class="container">
             <div class="row">
