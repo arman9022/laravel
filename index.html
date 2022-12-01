@@ -58,6 +58,27 @@
                                     <h4>Route::put('/update<span class="text-danger">Profile</span>/{id}', [<span class="text-danger">Profile</span>Controller::class, 'update<span class="text-danger">Profile</span>']);</h4>
                                     <h4>Route::get('/delete<span class="text-danger">Profile</span>/{id}', [<span class="text-danger">Profile</span>Controller::class, 'delete<span class="text-danger">Profile</span>']);</h4>
                                 </div>
+                                <div class="row">
+                                    <h6>
+                                        <pre>
+<textarea name="" id="" cols="200" rows="15" class="form-control">                                                      
+use App\Http\Controllers\ProfileController;
+
+Route::get('/', function () { return view('welcome');} );
+Route::view('/','welcomeNew');
+                                      
+Route::get('/createProfile', [Profile</span>Controller::class, 'create']);
+Route::post('/storeProfile', [Profile</span>Controller::class, 'store']);
+Route::get('/indexProfile', [Profile</span>Controller::class, 'index']);
+Route::get('/showProfile/{id}', [Profile</span>Controller::class, 'show']);
+Route::get('/editProfile/{id}', [Profile</span>Controller::class,'edit']);
+Route::put('/updateProfile/{id}', [Profile</span>Controller::class, 'update']);
+Route::get('/deleteProfile/{id}', [Profile</span>Controller::class, 'delete']);
+                  
+</textarea>
+                                        </pre>
+                                    </h6>
+                                </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
