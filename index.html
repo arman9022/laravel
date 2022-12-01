@@ -99,29 +99,14 @@ class <span class="text-danger">Profile</span> extends Model
                                             <div class="container">
                                                 <div class="row">
                                                     <h6>
-                                                        <pre>
-public function createProfile(){
-                                                        
-    return view('profile.createProfile');
-}                                                  
-                                                        </pre>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                          </div>
-                                          <div class="tab-pane fade" id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab" tabindex="0">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <h6>
-                                                        <pre>
+<pre>
+public function create(){                                                 
+    return view('profile.create');
+}   
 
-public function createProfile(){                                                
-        return view('profile.createProfile');
-}
-                                                        
-public function storeProfile(Request $request){
+public function store(Request $request){
 
-    $all_data=new Profile;
+    $all_data = new Profile;
                                                         
     $all_data ->name= $request->name;
                                                         
@@ -136,70 +121,34 @@ public function storeProfile(Request $request){
     $all_data->save();
                                                         
     return redirect()->back()->with('message', 'Added Successfully!!');
-}                                                  
-                                                        </pre>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                          </div>
-                                          <div class="tab-pane fade" id="v-pills-three" role="tabpanel" aria-labelledby="v-pills-three-tab" tabindex="0">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <h6>
-                                                        <pre>
-public function indexProfile(){
+} 
 
-    $all_data=Profile::select('*')
+public function index(){
+
+    $all_data = Profile::select('*')
                 ->orderBy('id', 'DESC')
                 ->get();
                                                           
-    return view('profile.indexProfile',compact('all_data'));
-}                                                                                                           
-                                                        </pre>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                          </div>
-                                          <div class="tab-pane fade" id="v-pills-four" role="tabpanel" aria-labelledby="v-pills-four-tab" tabindex="0">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <h6>
-                                                        <pre>
-public function showProfile($id){
+    return view('profile.index',compact('all_data'));
+} 
 
-    $data=Profile::find($id);
+public function show($id){
+
+    $data = Profile::find($id);
                                                                                                                     
-    return view('profile.showProfile', compact('data'));
-}                                                
-                                                        </pre>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                          </div>
-                                          <div class="tab-pane fade" id="v-pills-five" role="tabpanel" aria-labelledby="v-pills-five-tab" tabindex="0">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <h6>
-                                                        <pre>
-public function editProfile($id){
+    return view('profile.show', compact('data'));
+} 
 
-    $data=Profile::find($id);
+public function edit($id){
+
+    $data = Profile::find($id);
                                                         
-    return view('profile.editProfile', compact('data'));
-}                                                                                                         
-                                                        </pre>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                          </div>
-                                          <div class="tab-pane fade" id="v-pills-six" role="tabpanel" aria-labelledby="v-pills-six-tab" tabindex="0">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <h6>
-                                                        <pre>
-public function updateProfile(Request $request, $id){
+    return view('profile.edit', compact('data'));
+} 
 
-    $data=Profile::find($id);
+public function update(Request $request, $id){
+
+    $data = Profile::find($id);
                                                         
     $data->name= $request->name;
                                                                 
@@ -217,19 +166,10 @@ public function updateProfile(Request $request, $id){
                                                                 
     $data->update();
                                                         
-    return redirect()->to('/showProfile')->with('message', 'Updated Successfully');  
-}                                                                                                         
-                                                        </pre>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                          </div>
-                                          <div class="tab-pane fade" id="v-pills-seven" role="tabpanel" aria-labelledby="v-pills-seven-tab" tabindex="0">
-                                            <div class="container">
-                                                <div class="row">
-                                                    <h6>
-                                                        <pre>
-public function deleteProfile($id){
+    return redirect()->to('/show')->with('message', 'Updated Successfully');  
+} 
+
+public function delete($id){
 
     $data = Profile::find($id);
                         
@@ -241,12 +181,28 @@ public function deleteProfile($id){
     $data->delete();
                                                         
     return redirect()->back()->with('message', 'Deleted Successfully');
-}                                                                                                   
+}  
+
+</pre>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          
+                                          <div class="tab-pane fade" id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab" tabindex="0">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <h6>
+                                                        <pre>
+
+                                                        
+                                                 
                                                         </pre>
                                                     </h6>
                                                 </div>
                                             </div>
                                           </div>
+                                          
                                         </div>
                                     </div>
                                 </div>
