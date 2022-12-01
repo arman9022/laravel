@@ -30,6 +30,21 @@
                         <div class="tab-pane fade show active" id="pills-one" role="tabpanel" aria-labelledby="pills-one-tab" tabindex="0">
                             <div class="container-fluid">
                                 <div class="row">
+<textarea name="" id="" cols="200" rows="18" class="form-control">                                                      
+use App\Http\Controllers\ProfileController;
+
+Route::get('/', function () { return view('welcome');} );
+Route::view('/','welcomeNew');
+                                      
+Route::get('/createProfile', [Profile</span>Controller::class, 'create']);
+Route::post('/storeProfile', [Profile</span>Controller::class, 'store']);
+Route::get('/indexProfile', [Profile</span>Controller::class, 'index']);
+Route::get('/showProfile/{id}', [Profile</span>Controller::class, 'show']);
+Route::get('/editProfile/{id}', [Profile</span>Controller::class,'edit']);
+Route::put('/updateProfile/{id}', [Profile</span>Controller::class, 'update']);
+Route::get('/deleteProfile/{id}', [Profile</span>Controller::class, 'delete']);
+                  
+</textarea>
                                     <span class="text-danger"></span>
                                     <abbr title=""></abbr>
                                     <h4>composer create-project laravel/laravel <span class="text-danger">ProjectName</span></h4>
