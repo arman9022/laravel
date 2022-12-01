@@ -478,6 +478,12 @@ public function delete($id){
 @section('content')
 ...
 @endsection
+
+@if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
+    </div>
+@endif
 </textarea>
                                                         </pre>
                                                     </h6>
