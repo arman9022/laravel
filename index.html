@@ -31,73 +31,54 @@
                             <div class="container-fluid">
                                 <div class="row">
 <textarea name="" id="" cols="200" rows="18" class="form-control">                                                      
-use App\Http\Controllers\ProfileController;
-
-Route::get('/', function () { return view('welcome');} );
-Route::view('/','welcomeNew');
-                                      
-Route::get('/createProfile', [Profile</span>Controller::class, 'create']);
-Route::post('/storeProfile', [Profile</span>Controller::class, 'store']);
-Route::get('/indexProfile', [Profile</span>Controller::class, 'index']);
-Route::get('/showProfile/{id}', [Profile</span>Controller::class, 'show']);
-Route::get('/editProfile/{id}', [Profile</span>Controller::class,'edit']);
-Route::put('/updateProfile/{id}', [Profile</span>Controller::class, 'update']);
-Route::get('/deleteProfile/{id}', [Profile</span>Controller::class, 'delete']);
+composer create-project laravel/laravel ProjectName
+composer create-project laravel/laravel:^8.0 ProjectName
+cd ProjectName
+php artisan make:migration create_profile_table
+php artisan make:migration create_profile_table --create=profile
+php artisan migrate
+php artisan migrate:refresh
+php artisan make:model Profile
+php artisan make:controller ProfileController
+php artisan make:controller ProfileController --resource --model=Profile
+php artisan serve
                   
 </textarea>
-                                    <span class="text-danger"></span>
-                                    <abbr title=""></abbr>
-                                    <h4>composer create-project laravel/laravel <span class="text-danger">ProjectName</span></h4>
-                                    <h4>composer create-project laravel/laravel:^8.0 <span class="text-danger">ProjectName</span></h4>
-                                    <h4>cd <span class="text-danger">ProjectName</span></h4>
-                                    <h4>php artisan make:migration create_<span class="text-danger">profile</span>_table --create=<span class="text-danger">profile</span></h4>
-                                    <h4>php artisan migrate</h4>
-                                    <h4>php artisan migrate:refresh</h4>
-                                    <h4>php artisan make:controller <span class="text-danger">Profile</span>Controller</h4>
-                                    <h4>php artisan make:model <span class="text-danger">Profile</span></h4>
-                                    <h4>php artisan make:controller <span class="text-danger">Profile</span>Controller --resource --model=<span class="text-danger">Profile</span></h4>
-                                    <h4>php artisan serve</h4>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-two" role="tabpanel" aria-labelledby="pills-two-tab" tabindex="0">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <h6>
-                                        <pre>
 <textarea name="" id="" cols="200" rows="18" class="form-control">                                                      
-use App\Http\Controllers\ProfileController;
-
 Route::get('/', function () { return view('welcome');} );
 Route::view('/','welcomeNew');
-                                      
-Route::get('/createProfile', [Profile</span>Controller::class, 'create']);
-Route::post('/storeProfile', [Profile</span>Controller::class, 'store']);
-Route::get('/indexProfile', [Profile</span>Controller::class, 'index']);
-Route::get('/showProfile/{id}', [Profile</span>Controller::class, 'show']);
-Route::get('/editProfile/{id}', [Profile</span>Controller::class,'edit']);
-Route::put('/updateProfile/{id}', [Profile</span>Controller::class, 'update']);
-Route::get('/deleteProfile/{id}', [Profile</span>Controller::class, 'delete']);
+
+use App\Http\Controllers\ProfileController;                                   
+Route::get('/createProfile', [ProfileController::class, 'create']);
+Route::post('/storeProfile', [ProfileController::class, 'store']);
+Route::get('/indexProfile', [ProfileController::class, 'index']);
+Route::get('/showProfile/{id}', [ProfileController::class, 'show']);
+Route::get('/editProfile/{id}', [ProfileController::class,'edit']);
+Route::put('/updateProfile/{id}', [ProfileController::class, 'update']);
+Route::get('/deleteProfile/{id}', [ProfileController::class, 'delete']);
                   
 </textarea>
-                                        </pre>
-                                    </h6>
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-three" role="tabpanel" aria-labelledby="pills-three-tab" tabindex="0">
                             <div class="container-fluid">
                                 <div class="row">
-                                    
-                                    <h3>use Illuminate\Database\Eloquent\<span class="text-danger">Profile</span>;</h3>
-                                    <h3>
-                                        <pre>
-class <span class="text-danger">Profile</span> extends Model
+<textarea name="" id="" cols="200" rows="18" class="form-control">
+use Illuminate\Database\Eloquent\Profile;
+
+class Profile extends Model
 {
-    protected $table =  '<span class="text-danger">profile</span>' ;
+    protected $table =  'profile' ;
 }
-                                        </pre>
-                                    </h3>
+  
+</textarea>
                                 </div>
                             </div>
                         </div>
@@ -123,8 +104,7 @@ class <span class="text-danger">Profile</span> extends Model
                                           <div class="tab-pane fade show active" id="v-pills-one" role="tabpanel" aria-labelledby="v-pills-one-tab" tabindex="0">
                                             <div class="container">
                                                 <div class="row">
-                                                    <h6>
-<pre>
+<textarea name="" id="" cols="200" rows="18" class="form-control">
 public function create(){                                                 
     return view('profile.create');
 }   
@@ -208,8 +188,7 @@ public function delete($id){
     return redirect()->back()->with('message', 'Deleted Successfully');
 }  
 
-</pre>
-                                                    </h6>
+</textarea>
                                                 </div>
                                             </div>
                                           </div>
@@ -517,15 +496,13 @@ public function delete($id){
                         <div class="tab-pane fade" id="pills-six" role="tabpanel" aria-labelledby="pills-six-tab" tabindex="0">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <h3>
-                                    <pre>
+<textarea name="" id="" cols="200" rows="18" class="form-control"> 
 php artisan cache:clear
 php artisan route:cache
 php artisan view:clear
 php artisan config:cache 
 
-                                    </pre>
-                                    </h3>
+</textarea>
                                 </div>
                             </div>
                         </div>
@@ -534,7 +511,7 @@ php artisan config:cache
                                 <div class="row">
                                     <h3>
                                     <pre>
-<textarea name="" id="" cols="200" rows="15" class="form-control"> 
+<textarea name="" id="" cols="200" rows="18" class="form-control"> 
 database/migrations/000_create_users_table.php
 $table->boolean('is_admin')->nullable();
 
