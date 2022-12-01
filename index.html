@@ -198,6 +198,7 @@ public function delete($id){
                                           <button class="nav-link" id="v-pills-Vthree-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Vthree" type="button" role="tab" aria-controls="v-pills-Vthree" aria-selected="false">indexProfile.blade.php</button>
                                           <button class="nav-link" id="v-pills-Vfour-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Vfour" type="button" role="tab" aria-controls="v-pills-Vfour" aria-selected="false">showProfile.blade.php</button>
                                           <button class="nav-link" id="v-pills-Vfive-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Vfive" type="button" role="tab" aria-controls="v-pills-Vfive" aria-selected="false">editProfile.blade.php</button>
+                                          <button class="nav-link" id="v-pills-Vsix-tab" data-bs-toggle="pill" data-bs-target="#v-pills-Vsix" type="button" role="tab" aria-controls="v-pills-Vsix" aria-selected="false">mastering</button>
                                         </div>
                                         <div class="tab-content" id="v-pills-tabContent">
                                           <div class="tab-pane fade show active" id="v-pills-Vone" role="tabpanel" aria-labelledby="v-pills-Vone-tab" tabindex="0">
@@ -456,6 +457,27 @@ public function delete($id){
  
  </body>
 </html>                                                          
+</textarea>
+                                                        </pre>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          
+                                          <div class="tab-pane fade" id="v-pills-Vsix" role="tabpanel" aria-labelledby="v-pills-Vsix-tab" tabindex="0">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <h6>
+                                                        <pre>
+<textarea name="" id="" cols="200" rows="15" class="form-control">                                                       
+@yield('content')
+
+@include('admin.partials.navbar')
+
+@extends('admin.master')
+@section('content')
+...
+@endsection
 </textarea>
                                                         </pre>
                                                     </h6>
