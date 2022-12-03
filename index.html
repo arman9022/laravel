@@ -80,7 +80,8 @@ use Illuminate\Database\Eloquent\Profile;
 
 class Profile extends Model
 {
-    protected $table =  'profile' ;
+    protected $fillable = ['name','image'];
+    protected $table = 'profile';
 }
   
 </textarea>
