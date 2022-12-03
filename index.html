@@ -43,6 +43,7 @@ php artisan make:migration create_profile_table --create=profile
 php artisan migrate
 php artisan migrate:refresh
 php artisan make:model Profile
+php artisan make:model Profile -m
 php artisan make:controller ProfileController
 php artisan make:controller ProfileController --resource --model=Profile
 php artisan serve
