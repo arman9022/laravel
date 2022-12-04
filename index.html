@@ -28,6 +28,7 @@
                         <li class="nav-item p-1" role="presentation"><button class="nav-link" id="pills-five-tab" data-bs-toggle="pill" data-bs-target="#pills-five" type="button" role="tab" aria-controls="pills-five" aria-selected="false">.blade.php</button></li>
                         <li class="nav-item p-1" role="presentation"><button class="nav-link" id="pills-six-tab" data-bs-toggle="pill" data-bs-target="#pills-six" type="button" role="tab" aria-controls="pills-six" aria-selected="false">Cache Clear</button></li>
                         <li class="nav-item p-1" role="presentation"><button class="nav-link" id="pills-seven-tab" data-bs-toggle="pill" data-bs-target="#pills-seven" type="button" role="tab" aria-controls="pills-seven" aria-selected="false">Multi Auth</button></li>
+                        <li class="nav-item p-1" role="presentation"><button class="nav-link" id="pills-eight-tab" data-bs-toggle="pill" data-bs-target="#pills-eight" type="button" role="tab" aria-controls="pills-eight" aria-selected="false">Rest API</button></li>
 
                       </ul>
                       <div class="tab-content" id="pills-tabContent">
@@ -626,6 +627,55 @@ public function login(Request $request)
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="tab-pane fade" id="pills-eight" role="tabpanel" aria-labelledby="pills-eight-tab" tabindex="0">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <h3>
+                                    <pre>
+<textarea name="" id="" cols="200" rows="18" class="form-control"> 
+php artisan make:resource ProfileResource
+
+Routes/api.php  
+use App\Http\Controllers\BookController;
+use App\Http\Resources\BookResource; 
+use App\Models\Book;
+Route::post('/book', [BookController::class, 'store']);
+Route::get('/books', function(){ return BookResource::collection(Book::all()); });
+Route::get('/book/{id}', function($id){ return new BookResource(Book::findOrFail($id)); });
+
+App/Resources/Resource.php
+public function toArray($request)
+{
+    return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'author' => $this->author,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+    ];
+}  
+
+App/Providers/AppServiceProvider.php
+use Illuminate\Http\Resources\Json\JsonResource;
+    public function boot()
+    {
+        JsonResource::withoutWrapping();
+    }
+</textarea>
+                                    </pre>
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 
                     </div>
                 </div>
