@@ -754,8 +754,6 @@ toastr.options = {
                                     <pre>
 <textarea name="" id="" cols="200" rows="15" class="form-control"> 
 web.php
-<?php
-
 use App\Http\Controllers\ProductController;
 Route::get('/',[ProductController::class,'products'])->name('products');
 Route::post('/add-product',[ProductController::class,'addProduct'])->name('add.product');
