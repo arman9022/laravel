@@ -687,7 +687,18 @@ use Illuminate\Http\Resources\Json\JsonResource;
                                 <div class="row">
                                     <h3>
                                     <pre>
-<textarea name="" id="" cols="200" rows="17" class="form-control"> 
+<textarea name="" id="" cols="200" rows="17" class="form-control">
+index.blade.php
+@foreach($products as ...)
+@endforeach
+{!! $products->links() !!}
+
+App\Providers\AppServiceProvider.php
+use Illuminate\Pagination\Paginator;
+public function boot()
+{
+    Paginator::useBootstrap();
+}
 
 </textarea>
                                     </pre>
