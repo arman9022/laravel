@@ -754,20 +754,23 @@ toastr.options = {
 <textarea name="" id="" cols="200" rows="15" class="form-control"> 
 web.php
 <?php
-use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ProductController;
 Route::get('/',[ProductController::class,'products'])->name('products');
 Route::post('/add-product',[ProductController::class,'addProduct'])->name('add.product');
 Route::post('/update-product',[ProductController::class,'updateProduct'])->name('update.product');
 Route::post('/delete-product',[ProductController::class,'deleteProduct'])->name('delete.product');
 Route::get('/pagination/paginate-data',[ProductController::class,'pagination']);
+Route::get('/search-product',[ProductController::class,'searchProduct'])->name('search.product');
+
 App\Providers\AppServiceProvider.php
 use Illuminate\Pagination\Paginator;
     public function boot()
     {
         Paginator::useBootstrap();
     }
-php artisan make:model Product -m
+    
+App\Modals\Product.php
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
@@ -778,11 +781,11 @@ php artisan make:model Product -m
         });
     }
  
-php artisan make:controller ProductController
+App\Http\Controllers\ProductController.php
 use App\Models\Product;
 {
     public function products(){
-        $products = Product::latest()->paginate(5);
+        $products = Product::latest()->paginate(3);
         return view('products',compact('products'));
     }
     public function addProduct(Request $request){
@@ -834,10 +837,25 @@ use App\Models\Product;
         ]);
     }
     public function pagination(Request $request){
-        $products = Product::latest()->paginate(5);
-        return view('pagination_products',compact('products'))->render();
+        $products = Product::latest()->paginate(3);
+        return view('pagination_products',compact('products'))->render(); 
+    }
+    public function searchProduct(Request $request){
+        $products = Product::where('name','like','%'.$request->search_string.'%')
+                    ->orWhere('price','like','%'.$request->search_string.'%')
+                    ->orderBy('id','desc')
+                    ->paginate(5);
+
+            if($products->count() >= 1){
+                return view('pagination_products',compact('products'))->render();
+            }else{
+                return response()->json([
+                    'status'=>'nothing found'
+                ]);
+            }
     }
 }
+
 products.blade.php
 <!doctype html>
 <html lang="en">
@@ -862,41 +880,44 @@ products.blade.php
             <div class="row">
                 <div class="col-2"></div>
                 <div class="col-8">
-                    <h2 class="py-5 text-center">Laravel Ajax CRUD</h2>
+                    <!-- <h2 class="py-5 text-center">Laravel Ajax CRUD</h2> -->
                     <a href="" class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#addModal">Add Product</a>
-                    <div class="tavle-data">
+                    <input type="text" name="search" id="search" class="my-3 form-control" placeholder="Search Here">
+                    <div class="table-data">
                         <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($products as $key=>$product)
-                            <tr>
-                            <th>{{ $key+1 }}</th>
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>
-                                <a href="" class="btn btn-primary update_product_form" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#updateModal" 
-                                data-id="{{ $product->id }}" 
-                                data-name="{{ $product->name }}" 
-                                data-price="{{ $product->price }}">
-                                <i class="bi bi-pencil-square"></i></a>
+                            <thead>
+                                <tr>
+                                <!-- <th scope="col">#</th> -->
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($products as $key=>$product)
+                                <tr>
+                                <!-- <th>{{ $key+1 }}</th> -->
+                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->price }}</td>
+                                <td>
+                                    <a href="" class="btn btn-primary update_product_form" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#updateModal" 
+                                    data-id="{{ $product->id }}" 
+                                    data-name="{{ $product->name }}" 
+                                    data-price="{{ $product->price }}">
+                                    <i class="bi bi-pencil-square"></i></a>
 
-                                <a href="" class="btn btn-danger delete_product" 
-                                data-id="{{ $product->id }}">
-                                    <i class="bi bi-trash-fill"></i>
-                                </a>
-                            </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
+                                    <a href="" class="btn btn-danger delete_product" 
+                                    data-id="{{ $product->id }}">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                         {!! $products->links() !!}
                     </div>
@@ -911,6 +932,7 @@ products.blade.php
     {!! Toastr::message() !!}
   </body>
 </html>
+
 product_js.blade.php
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -929,7 +951,6 @@ product_js.blade.php
         $(document).ready(function(){ 
           // alert(); 
 
-
           $(document).on('click','.add_product',function(e){
             e.preventDefault();
             let name = $('#name').val();
@@ -944,24 +965,24 @@ product_js.blade.php
                   $('#addModal').modal('hide');
                   $('#addProductForm')[0].reset();
                   $('.table').load(location.href+' .table');
-Command: toastr["success"]("Product Added", "Success")
-toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-top-right",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
+                  Command: toastr["success"]("Product Added", "Success")
+                  toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                  }
                 }
               },error:function(err){
                 let error = err.responseJSON;
@@ -971,7 +992,6 @@ toastr.options = {
               }
             });
           });
-
 
           $(document).on('click','.update_product_form',function(){
             let id = $(this).data('id');
@@ -998,24 +1018,24 @@ toastr.options = {
                   $('#updateModal').modal('hide');
                   $('#updateProductForm')[0].reset();
                   $('.table').load(location.href+' .table');
-Command: toastr["warning"]("Product Updated", "Success")
-toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-top-right",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
+                  Command: toastr["info"]("Product Updated", "Success")
+                  toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": false,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": "300",
+                    "hideDuration": "1000",
+                    "timeOut": "5000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                  }
                 }
               },error:function(err){
                 let error = err.responseJSON;
@@ -1039,24 +1059,24 @@ toastr.options = {
                 success:function(res){
                   if(res.status=='success'){
                     $('.table').load(location.href+' .table');
-Command: toastr["error"]("Product Deleted", "Success")
-toastr.options = {
-  "closeButton": true,
-  "debug": false,
-  "newestOnTop": false,
-  "progressBar": true,
-  "positionClass": "toast-top-right",
-  "preventDuplicates": false,
-  "onclick": null,
-  "showDuration": "300",
-  "hideDuration": "1000",
-  "timeOut": "5000",
-  "extendedTimeOut": "1000",
-  "showEasing": "swing",
-  "hideEasing": "linear",
-  "showMethod": "fadeIn",
-  "hideMethod": "fadeOut"
-}
+                    Command: toastr["error"]("Product Deleted", "Success")
+                    toastr.options = {
+                      "closeButton": true,
+                      "debug": false,
+                      "newestOnTop": false,
+                      "progressBar": true,
+                      "positionClass": "toast-top-right",
+                      "preventDuplicates": false,
+                      "onclick": null,
+                      "showDuration": "300",
+                      "hideDuration": "1000",
+                      "timeOut": "5000",
+                      "extendedTimeOut": "1000",
+                      "showEasing": "swing",
+                      "hideEasing": "linear",
+                      "showMethod": "fadeIn",
+                      "hideMethod": "fadeOut"
+                    }
                   }
                 }
               });
@@ -1064,22 +1084,41 @@ toastr.options = {
 
           });
 
-          $(document).on('click','.pagination a',function(e){
+          $(document).on('click','.pagination a', function(e){
             e.preventDefault();
             let page = $(this).attr('href').split('page=')[1]
             product(page)
-          })
+          });
           function product(page){
             $.ajax({
               url:"/pagination/paginate-data?page="+page,
               success:function(res){
                 $('.table-data').html(res);
               }
-            })
+            });
           }
+
+          $(document).on('keyup',function(e){
+            e.preventDefault();
+            let search_string = $('#search').val();
+            // console.log(search_string);
+            $.ajax({
+              url:"{{ route('search.product') }}",
+              method:'GET',
+              data:{search_string:search_string},
+              success:function(res){
+                $('.table-data').html(res);
+                if(res.status=='nothing_found'){
+                  $('.table-data').html('<span class="text-danger">'+'Nothing Found'+'</span>');
+                }
+              }
+            });
+          });
+
 
         });
     </script>
+    
 add_product_modal.blade.php
 <!-- Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -1153,40 +1192,42 @@ update_product_modal.blade.php
   </div>
   </form>
 </div>
+
 pagination_products.blade.php
-
                         <table class="table table-bordered">
-                          <thead>
-                              <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Name</th>
-                              <th scope="col">Price</th>
-                              <th scope="col">Action</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @foreach($products as $key=>$product)
-                              <tr>
-                              <th>{{ $key+1 }}</th>
-                              <td>{{ $product->name }}</td>
-                              <td>{{ $product->price }}</td>
-                              <td>
-                                  <a href="" class="btn btn-primary update_product_form" 
-                                  data-bs-toggle="modal" 
-                                  data-bs-target="#updateModal" 
-                                  data-id="{{ $product->id }}" 
-                                  data-name="{{ $product->name }}" 
-                                  data-price="{{ $product->price }}">
-                                  <i class="bi bi-pencil-square"></i></a>
+                            <thead>
+                                <tr>
+                                <!-- <th scope="col">#</th> -->
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($products as $key=>$product)
+                                <tr>
+                                <!-- <th>{{ $key+1 }}</th> -->
+                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->price }}</td>
+                                <td>
+                                    <a href="" class="btn btn-primary update_product_form" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#updateModal" 
+                                    data-id="{{ $product->id }}" 
+                                    data-name="{{ $product->name }}" 
+                                    data-price="{{ $product->price }}">
+                                    <i class="bi bi-pencil-square"></i></a>
 
-                                  <a href="" class="btn btn-danger delete_product" 
-                                  data-id="{{ $product->id }}">
-                                      <i class="bi bi-trash-fill"></i>
-                                  </a>
-                              </td>
-                              </tr>
-                              @endforeach
-                          </tbody>
+                                    <a href="" class="btn btn-danger delete_product" 
+                                    data-id="{{ $product->id }}">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                         {!! $products->links() !!}
 
