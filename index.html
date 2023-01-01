@@ -141,6 +141,13 @@ public function create(){
 public function store(Request $request){
 
     $all_data = new Profile;
+  
+    $request->validate([
+      'file' => 'required|mimes:pdf,xlx,csv|max:4096',
+    ]);
+    $fileName = $request->file->getClientOriginalName();  
+    $request->file->move(public_path('uploads'), $fileName);
+    $all_data->file=$fileName;
                                                         
     $all_data ->name= $request->name;
                                                         
@@ -278,6 +285,10 @@ public function delete($id){
                         <label class="form-label">Image</label>
                         <input type="file" name="image" class="form-control">
                     </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">PDF</label>
+                        <input type="file" name="file" class="form-control">
+                    </div>
                     <div class="col-md-8 mb-3">
                         <label class="form-label">Title</label>
                         <input type="text" name="title" class="form-control">
@@ -351,6 +362,7 @@ public function delete($id){
                                 <th scope="col">#</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">Image</th>
+                                <th scope="col">PDF</th>
                                 <th scope="col">Description</th>
                                 <th scope="col" style="text-align:center;">Action</th>
                             </tr>
@@ -361,6 +373,7 @@ public function delete($id){
                                 <th scope="row">{{$loop->index+1}}</th>
                                 <td>{{$all_data->title}}</td>
                                 <td><img src="{{ asset('images/blog/'.$all_data->image) }}" style="width:100px;height:100px;"></td>
+                                <td><object data="{{ asset('uploads/'.$all_data->file) }}" type="application/pdf" style="width:300px;height:300px;"></object></td>
                                 <td>{!!$all_data->description!!}</td>
                                 <td style="text-align:center;">
                                     <a href="{{ url('/show',$all_data->id) }}" class="btn btn-success fw-bold mb-1">Show</a>
@@ -461,6 +474,10 @@ public function delete($id){
                         <label class="form-label">Image</label>
                         <input type="file" name="image" class="form-control">
                         <img src="{{ asset('images/blog/'.$data->image) }}" style="width:150px;height:150px;" class="my-3">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">PDF</label>
+                        <input type="file" name="file" class="form-control">
                     </div>
                     <div class="col-md-8 mb-3">
                         <label class="form-label">Title</label>
