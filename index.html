@@ -75,6 +75,17 @@ php artisan serve
 <textarea name="" id="" cols="200" rows="15" class="form-control">                                                      
 Route::get('/', function () { return view('welcome');} );
 Route::view('/','welcomeNew');
+  
+use App\Http\Controllers\CrudController; 
+Route::prefix('crud')->group(function () {
+    Route::get('/', [CrudController::class, 'index']);
+    Route::get('/create', [CrudController::class, 'create']);
+    Route::post('/store', [CrudController::class, 'store']);
+    Route::get('/show/{id}', [CrudController::class, 'show']);
+    Route::get('/edit/{id}', [CrudController::class,'edit']);
+    Route::put('/update/{id}', [CrudController::class, 'update']);
+    Route::get('/delete/{id}', [CrudController::class, 'delete']);
+});
 
 use App\Http\Controllers\ProfileController;       
 Route::group(['prefix'=>'profile'], function(){
@@ -112,6 +123,16 @@ class Profile extends Model
       'image',
     ];
     protected $table = 'profile';
+  
+    public function setHobbyAttribute($value)
+    {
+        $this->attributes['hobby'] = json_encode($value);
+    }
+
+    public function getHobbyAttribute($value)
+    {
+        return $this->attributes['hobby'] = json_decode($value);
+    }
   
     public function user(){
       return $this->hasOne(User::class);
