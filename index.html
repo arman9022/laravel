@@ -60,6 +60,8 @@ php artisan make:model Profile -mc
 php artisan make:controller ProfileController
 php artisan make:controller ProfileController --resource --model=Profile
 php artisan make:resource ProfileResource
+php artisan make:seeder CreateUsersSeeder
+php artisan db:seed --class=CreateUsersSeeder
 composer require brian2694/laravel-toastr
 php artisan serve
                   
