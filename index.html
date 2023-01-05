@@ -781,6 +781,9 @@ index.blade.php
 @endforeach
 {!! $products->links() !!}
 
+$cruds = Crud::select('*')->paginate(6);
+return view('index',compact('cruds'))->with('i', (request()->input('page', 1) - 1) * 6);
+
 App\Providers\AppServiceProvider.php
 use Illuminate\Pagination\Paginator;
 public function boot()
